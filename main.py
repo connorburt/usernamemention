@@ -4,7 +4,7 @@ __author__ = 'Connor Burt'
 
 """
 
-The "usernamemention" bot aims to provide username mentions for users that
+The usernamemention bot aims to provide username mentions for users that
 appear in text or linked-based submissions.
 
 """
@@ -14,7 +14,38 @@ import re
 import praw
 
 from accountinfo import username, password, client_id, client_secret
-from templates import text_template, link_template
+
+# Template for username mentions in text-based submissions.
+TEXT_TEMPLATE = """
+=
+##### [{submission_title}]({submission_url})
+
+^^submitted ^^by ^^[{submission_author}]\
+(https://www.reddit.com/user/{submission_author})
+
+{submission_content}
+
+=
+
+---
+**[^^comments]({comments})**
+**[^^give ^^gold]({give_gold})**
+"""
+
+# Template for username mentions in link-based submissions.
+LINK_TEMPLATE = """
+=
+##### [{submission_title}]({submission_url})
+
+^^submitted ^^by ^^[{submission_author}]\
+(https://www.reddit.com/user/{submission_author})
+
+=
+
+---
+**[^^comments]({comments})**
+**[^^give ^^gold]({give_gold})**
+"""
 
 
 def main():
