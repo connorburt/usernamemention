@@ -13,7 +13,7 @@ import re
 
 import praw
 
-from accountinfo import username, password, client_id, client_secret
+from accountinfo import USERNAME, PASSWORD, CLIENT_ID, CLIENT_SECRET
 
 # Template for username mentions in text-based submissions.
 TEXT_TEMPLATE = """
@@ -72,8 +72,8 @@ def reddit_object():
                   'more aware when they\'re being mentioned in text or',
                   'link-based submissions. (Made by u/connorburt.)')
     reddit = praw.Reddit(user_agent=user_agent,
-                         client_id=client_id, client_secret=client_secret,
-                         username=username, password=password)
+                         client_id=CLIENT_ID, client_secret=CLIENT_SECRET,
+                         username=USERNAME, password=PASSWORD)
 
     return reddit
 
@@ -136,7 +136,7 @@ def send_messages(reddit, submission, username_list, submission_type):
         submission.fullname)
 
     if submission_type == 'text':
-        message = text_template.format(submission_title=submission.title,
+        message = TEXT_TEMPLATE.format(submission_title=submission.title,
                                        submission_author=submission.author,
                                        submission_url=submission.permalink,
                                        submission_content=adjust_content(
@@ -144,7 +144,7 @@ def send_messages(reddit, submission, username_list, submission_type):
                                        comments=submission.shortlink,
                                        give_gold=give_gold)
     else:
-        message = link_template.format(submission_title=submission.title,
+        message = LINK_TEMPLATE.format(submission_title=submission.title,
                                        submission_author=submission.author,
                                        submission_url=submission.permalink,
                                        submission_content='',
